@@ -46,17 +46,19 @@ export function DataTableRowActions<TData>({
   const onDelete = async () => {
     setLoading(true);
     try {
-      await axios.delete(`/api/crm/accounts/${account?.id}`);
+      await axios.put(`/api/accounts/set-deleted/${account.id}`, {
+        isActive: true,
+      });
       toast({
-        title: "Success",
-        description: "Opportunity has been deleted",
+        title: "Hotovo",
+        description: "Účet byl smazán.",
       });
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Error",
         description:
-          "Something went wrong while deleting opportunity. Please try again.",
+          "Something went wrong while activating account. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -71,6 +73,75 @@ export function DataTableRowActions<TData>({
       title: "Hotovo",
       description: "Privátní kód byl zkopírován do schránky.",
     });
+  };
+
+  const onSetActive = async (id: string) => {
+    setLoading(true);
+    try {
+      await axios.put(`/api/accounts/set-active/${id}`, {
+        isActive: true,
+      });
+      toast({
+        title: "Hotovo",
+        description: "Účet byl aktivován.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description:
+          "Something went wrong while activating account. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+      router.refresh();
+    }
+  };
+
+  const onSetInactive = async (id: string) => {
+    setLoading(true);
+    try {
+      await axios.put(`/api/accounts/set-inactive/${id}`, {
+        isActive: true,
+      });
+      toast({
+        title: "Hotovo",
+        description: "Účet byl deaktivován.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description:
+          "Something went wrong while activating account. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+      router.refresh();
+    }
+  };
+
+  const onSetSuspended = async (id: string) => {
+    setLoading(true);
+    try {
+      await axios.put(`/api/accounts/set-suspended/${id}`, {
+        isActive: true,
+      });
+      toast({
+        title: "Hotovo",
+        description: "Účet byl pozastaven.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description:
+          "Something went wrong while activating account. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+      router.refresh();
+    }
   };
 
   return (
@@ -100,6 +171,16 @@ export function DataTableRowActions<TData>({
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setUpdateOpen(true)}>
             Update
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => onSetActive(account.id)}>
+            Aktivovat
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onSetInactive(account.id)}>
+            Deaktivovat
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onSetSuspended(account.id)}>
+            Pozastavit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => onCopy(account.publicKey)}>
