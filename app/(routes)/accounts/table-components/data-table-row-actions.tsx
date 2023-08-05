@@ -25,6 +25,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import RightViewModalNoTrigger from "@/components/modals/right-view-notrigger";
+import { Copy } from "lucide-react";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -64,6 +65,14 @@ export function DataTableRowActions<TData>({
     }
   };
 
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast({
+      title: "Hotovo",
+      description: "Privátní kód byl zkopírován do schránky.",
+    });
+  };
+
   return (
     <>
       <AlertModal
@@ -83,7 +92,7 @@ export function DataTableRowActions<TData>({
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuContent align="end" className="w-[260px]">
           <DropdownMenuItem
             onClick={() => router.push(`/accounts/${account?.id}`)}
           >
@@ -91,6 +100,11 @@ export function DataTableRowActions<TData>({
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setUpdateOpen(true)}>
             Update
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => onCopy(account.publicKey)}>
+            <Copy className="mr-2 w-4 h-4" />
+            Kopírovat privátní kód
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setOpen(true)}>
