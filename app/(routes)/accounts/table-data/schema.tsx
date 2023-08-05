@@ -5,17 +5,11 @@ import { z } from "zod";
 export const accountSchema = z.object({
   //TODO: fix all the types and nullable
   id: z.string(),
-  date_created: z.date().optional(),
+  createdAt: z.date().optional(),
   name: z.string(),
-  assigned_to_user: z.object({}).optional(),
-  contacts: z
-    .array(
-      z.object({
-        first_name: z.string().optional(),
-        last_name: z.string(),
-      })
-    )
-    .optional(),
+  email: z.string(),
+  publicKey: z.string(),
+  status: z.string(),
 });
 
 export type Account = z.infer<typeof accountSchema>;

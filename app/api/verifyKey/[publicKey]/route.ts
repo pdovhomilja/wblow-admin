@@ -19,12 +19,18 @@ export async function GET(
       },
     });
 
-    console.log(verifiedKey, "verifiedKey");
+    //console.log(verifiedKey, "verifiedKey");
     if (!verifiedKey) {
       return NextResponse.json({ message: "Invalid" }, { status: 200 });
     }
 
-    return NextResponse.json({ message: "Valid" }, { status: 200 });
+    const data = {
+      name: verifiedKey.name,
+      email: verifiedKey.email,
+      status: verifiedKey.status,
+    };
+
+    return NextResponse.json({ message: "Valid", data }, { status: 200 });
   } catch (error) {
     console.log("[PUBLICKEY_GET]", error);
     return new NextResponse("Initial error", { status: 500 });

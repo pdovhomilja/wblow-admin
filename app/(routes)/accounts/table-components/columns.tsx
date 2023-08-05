@@ -13,35 +13,17 @@ import moment from "moment";
 
 export const columns: ColumnDef<Account>[] = [
   {
-    accessorKey: "date_created",
+    accessorKey: "createdAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Expected close" />
+      <DataTableColumnHeader column={column} title="Date created" />
     ),
     cell: ({ row }) => (
       <div className="w-[80px]">
-        {moment(row.getValue("date_created")).format("YY-MM-DD")}
+        {moment(row.getValue("createdAt")).format("YY-MM-DD")}
       </div>
     ),
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "assigned_to_user",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Assigned to" />
-    ),
-
-    cell: ({ row }) => (
-      <div className="w-[150px]">
-        {
-          //@ts-ignore
-          //TODO: fix this
-          row.getValue("assigned_to_user")?.name ?? "Unassigned"
-        }
-      </div>
-    ),
-    enableSorting: true,
-    enableHiding: true,
   },
   {
     accessorKey: "name",
@@ -72,18 +54,15 @@ export const columns: ColumnDef<Account>[] = [
     enableHiding: true,
   },
   {
-    accessorKey: "contacts",
+    accessorKey: "publicKey",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Account contact" />
+      <DataTableColumnHeader column={column} title="Accunt public Key" />
     ),
 
     cell: ({ row }) => (
-      <div className="w-[150px]">
-        {row.original.contacts?.map(
-          (contact: any) => contact.first_name + " " + contact.last_name
-        )}
-      </div>
+      <div className="w-[350px]">{row.getValue("publicKey")}</div>
     ),
+
     enableSorting: false,
     enableHiding: true,
   },

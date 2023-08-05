@@ -17,20 +17,28 @@ model Licenses {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   validFrom         DateTime @default(now())
-  validUntil        DateTime 
+  validUntil        DateTime
   isTrial           Boolean  @default(true)
   assignedAccountId String   @db.ObjectId
   assignedAccount   Accounts @relation(fields: [assignedAccountId], references: [id])
 }
 
 model Accounts {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String     @unique
+  email     String        @unique
   phone     String
   password  String
-  publicKey String     @unique @default(cuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  publicKey String        @unique @default(cuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  status    AccountStatus @default(active)
   Licenses  Licenses[]
+}
+
+enum AccountStatus {
+  active
+  inactive
+  suspended
+  deleted
 }
