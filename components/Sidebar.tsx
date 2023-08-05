@@ -12,6 +12,7 @@ const Sidebar = (props: Props) => {
         <Link href="/">Dashboard</Link>
         <Separator />
         <Link href="/accounts">Accounts</Link>
+        <Link href="/licenses">Licenses</Link>
       </nav>
     </div>
   );

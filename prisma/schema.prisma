@@ -10,23 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Licences {
+model Licenses {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   licenceKey        String   @unique @default(cuid())
   maxUsers          Int      @default(5)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  validFrom         DateTime @default(now())
+  validUntil        DateTime 
+  isTrial           Boolean  @default(true)
   assignedAccountId String   @db.ObjectId
   assignedAccount   Accounts @relation(fields: [assignedAccountId], references: [id])
 }
 
 model Accounts {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String   @unique
+  email     String     @unique
   phone     String
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Licences Licences[]
+  publicKey String     @unique @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Licenses  Licenses[]
 }
