@@ -19,7 +19,6 @@ export async function GET(
       },
     });
 
-    //console.log(verifiedKey, "verifiedKey");
     if (!verifiedKey) {
       return NextResponse.json({ message: "Invalid" }, { status: 200 });
     }
